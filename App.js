@@ -10,7 +10,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <AppStack.Navigator>
+      <AppStack.Navigator screenOptions={{ headerShown: false }}>
         <AppStack.Screen name="Onboarding" component={OnboardingScreen} />
         <AppStack.Screen name="Login" component={LoginScreen} />
       </AppStack.Navigator>

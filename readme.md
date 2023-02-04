@@ -20,3 +20,7 @@ For more refer this -:) https://reactnavigation.org/docs/hello-react-navigation
 Bottom tab navigator
 yarn add @react-navigation/bottom-tabs
 https://reactnavigation.org/docs/bottom-tab-navigator/
+
+## swiper
+yarn add react-native-onboarding-swiper
+https://github.com/jfilter/react-native-onboarding-swiper#readme

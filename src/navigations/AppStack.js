@@ -146,22 +146,7 @@ const AppStack = () => {
       screenOptions={{
         activeTintColor: '#2e64e5',
       }}>
-      <Tab.Screen
-        name="Group"
-        component={GroupScreen}
-        options={({route}) => ({
-          tabBarLabel: 'Group',
-          // tabBarVisible: route.state && route.state.index === 0,
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="home-outline"
-              color={color}
-              size={size}
-            />
-          ),
-        })}
-      />
-      <Tab.Screen
+             <Tab.Screen
         name="Chat"
         component={ChatScreen}
         options={({route}) => ({
@@ -179,6 +164,22 @@ const AppStack = () => {
           ),
         })}
       />
+      <Tab.Screen
+        name="Group"
+        component={GroupScreen}
+        options={({route}) => ({
+          tabBarLabel: 'Group',
+          // tabBarVisible: route.state && route.state.index === 0,
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="home-outline"
+              color={color}
+              size={size}
+            />
+          ),
+        })}
+      />
+ 
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}

@@ -33,3 +33,16 @@ https://github.com/jfilter/react-native-onboarding-swiper#readme
 ### Authentication Works
 yarn add @react-native-firebase/app
 yarn add @react-native-firebase/auth
+add google-services.json to android/app directory
+https://rnfirebase.io/
+add this line to  /android/build.gradle file:
+        classpath 'com.google.gms:google-services:4.3.14'
+        
+        buildscript {
+  dependencies {
+    // ... other dependencies
+    classpath 'com.google.gms:google-services:4.3.14'
+    // Add me --- /\
+  }
+}
+

@@ -3,7 +3,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import OnboardingScreen from "./src/screens/OnboardingScreen";
-import LoginScreen from "./src/screens/LoginScreen";
+import LoginScreen from "./src/screens/auth/LoginScreen";
 
 export default function App() {
   const AppStack = createNativeStackNavigator();

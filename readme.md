@@ -24,3 +24,12 @@ https://reactnavigation.org/docs/bottom-tab-navigator/
 ## swiper
 yarn add react-native-onboarding-swiper
 https://github.com/jfilter/react-native-onboarding-swiper#readme
+
+
+
+
+
+
+### Authentication Works
+yarn add @react-native-firebase/app
+yarn add @react-native-firebase/auth

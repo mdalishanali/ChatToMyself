@@ -1,9 +1,8 @@
 import React, { createContext, useState } from "react";
 import auth from "@react-native-firebase/auth";
 // import firestore from '@react-native-firebase/firestore';
-import { GoogleSignin } from '@react-native-community/google-signin';
 // import { LoginManager, AccessToken } from 'react-native-fbsdk';
-
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -24,12 +23,15 @@ export const AuthProvider = ({ children }) => {
         googleLogin: async () => {
           try {
             const { idToken } = await GoogleSignin.signIn();
-            
+
             const googleCredential =
               auth.GoogleAuthProvider.credential(idToken);
 
             await auth()
               .signInWithCredential(googleCredential)
+              .then((item) => {
+                console.log("item: ", item);
+              })
               // Use it only when user Sign's up,
               // so create different social signup function
               // .then(() => {

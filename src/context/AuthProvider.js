@@ -1,12 +1,60 @@
 import React, { createContext, useState } from "react";
 import auth from "@react-native-firebase/auth";
-// import firestore from '@react-native-firebase/firestore';
+import firestore from "@react-native-firebase/firestore";
 // import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+
+  const createGroups = async (user) => {
+    const initialGroups = [
+      {
+        userId: user.uid,
+        name: "Personal",
+      },
+      {
+        userId: user.uid,
+        name: "Goal",
+      },
+      {
+        userId: user.uid,
+        name: "Study Life",
+      },
+      {
+        userId: user.uid,
+        name: "Idea",
+      },
+      {
+        userId: user.uid,
+        name: "Startup",
+      },
+    ];
+    initialGroups.forEach(async (group) => {
+      await firestore()
+        .collection("groups")
+        .add(group)
+        .then(() => {});
+    });
+  };
+
+  const checkGroupExists = async (user) => {
+    await firestore()
+      .collection("groups")
+      .where("userId", "==", user.uid)
+      .get()
+      .then((querySnapshot) => {
+        const count = querySnapshot.size;
+        console.log("count: ", count);
+        if (!count) {
+          createGroups(user);
+        } else {
+          return;
+        }
+      });
+  };
 
   return (
     <AuthContext.Provider
@@ -16,8 +64,7 @@ export const AuthProvider = ({ children }) => {
         login: async (email, password) => {
           try {
             await auth().signInWithEmailAndPassword(email, password);
-          } catch (e) {
-          }
+          } catch (e) {}
         },
         googleLogin: async () => {
           try {
@@ -28,8 +75,9 @@ export const AuthProvider = ({ children }) => {
 
             await auth()
               .signInWithCredential(googleCredential)
-              .then((item) => {
-                console.log("item: ", item);
+              .then(async (data) => {
+                console.log("item: ", data.user);
+                await checkGroupExists(data.user);
               })
               // Use it only when user Sign's up,
               // so create different social signup function

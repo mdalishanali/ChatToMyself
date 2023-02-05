@@ -14,22 +14,27 @@ export const AuthProvider = ({ children }) => {
       {
         userId: user.uid,
         name: "Personal",
+        createdAt: new Date(),
       },
       {
         userId: user.uid,
         name: "Goal",
+        createdAt: new Date(),
       },
       {
         userId: user.uid,
         name: "Study Life",
+        createdAt: new Date(),
       },
       {
         userId: user.uid,
         name: "Idea",
+        createdAt: new Date(),
       },
       {
         userId: user.uid,
         name: "Startup",
+        createdAt: new Date(),
       },
     ];
     initialGroups.forEach(async (group) => {
@@ -76,7 +81,6 @@ export const AuthProvider = ({ children }) => {
             await auth()
               .signInWithCredential(googleCredential)
               .then(async (data) => {
-                console.log("item: ", data.user);
                 await checkGroupExists(data.user);
               })
               // Use it only when user Sign's up,
@@ -111,8 +115,10 @@ export const AuthProvider = ({ children }) => {
           try {
             await auth()
               .createUserWithEmailAndPassword(email, password)
-              .then(({ data }) => {
+              .then(async (data) => {
                 console.log("data: ", data);
+                await checkGroupExists(data.user);
+
                 // firestore()
                 //   .collection("users")
                 //   .doc(auth().currentUser.uid)

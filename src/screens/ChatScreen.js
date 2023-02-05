@@ -10,14 +10,15 @@ import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import firestore from "@react-native-firebase/firestore";
 
 export default function ChatScreen() {
-
   const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const groupId = "456";
+
   useEffect(() => {
     getAllNotes();
-  },[]);
+  }, []);
 
   const getAllNotes = async () => {
     try {
@@ -56,6 +57,7 @@ export default function ChatScreen() {
         createdAt,
         text,
         user,
+        groupId: groupId,
       })
       .then(() => {});
   }, []);

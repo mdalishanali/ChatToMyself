@@ -27,7 +27,8 @@ export const AuthProvider = ({ children }) => {
           try {
             await auth()
               .createUserWithEmailAndPassword(email, password)
-              .then(() => {
+              .then(({ data }) => {
+                console.log('data: ', data);
                 // firestore()
                 //   .collection("users")
                 //   .doc(auth().currentUser.uid)

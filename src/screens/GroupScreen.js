@@ -2,11 +2,14 @@ import { View, Text, Button, TouchableOpacity } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import firestore from "@react-native-firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
 
 export default function GroupScreen() {
   const { logout, user } = useContext(AuthContext);
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const navigation = useNavigation();
 
   const getAllGroups = async () => {
     try {
@@ -40,7 +43,9 @@ export default function GroupScreen() {
   }, []);
 
   const openChat = (group) => {
+    /** {"_id": "giecnxWMY1owF14ZDGmI", "createdAt": 2023-02-05T13:12:47.698Z, "name": "Goal", "userId": "8rqj76pHfsRVeiwSLDE7daISrGE2"} */
     console.log("group:----- ", group);
+    navigation.navigate("Chat", { group });
   };
 
   return (

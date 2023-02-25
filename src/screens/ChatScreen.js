@@ -8,16 +8,20 @@ import { AuthContext } from "../context/AuthProvider";
 
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import firestore from "@react-native-firebase/firestore";
+import { useRoute } from "@react-navigation/native";
 
 export default function ChatScreen() {
   const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const groupId = "456";
+  const route = useRoute();
+  const item = route.params;
+  console.log('item:98989 ', item);
+
 
   useEffect(() => {
-    getAllNotes();
+    // getAllNotes();
   }, []);
 
   const getAllNotes = async () => {
@@ -57,7 +61,6 @@ export default function ChatScreen() {
         createdAt,
         text,
         user,
-        groupId: groupId,
       })
       .then(() => {});
   }, []);

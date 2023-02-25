@@ -16,13 +16,13 @@ export default function ChatScreen() {
   const [loading, setLoading] = useState(true);
 
   const route = useRoute();
-  const item = route.params;
-  console.log('item:98989 ', item);
-
+  const { _id: groupId } = route.params.item;
 
   useEffect(() => {
-    // getAllNotes();
-  }, []);
+    setLoading(true);
+    getAllNotes();
+    console.log(" ia m called", groupId);
+  }, [groupId]);
 
   const getAllNotes = async () => {
     try {
@@ -30,6 +30,7 @@ export default function ChatScreen() {
       await firestore()
         .collection("notes")
         .where("user._id", "==", user.uid)
+        .where("groupId", "==", groupId)
         .orderBy("createdAt", "desc")
         .get()
         .then((querySnapshot) => {
@@ -44,26 +45,31 @@ export default function ChatScreen() {
       if (loading) {
         setLoading(false);
       }
+      setLoading(false);
     } catch (e) {
+      console.log("e: ", e);
       setLoading(false);
     }
   };
 
-  const onSend = useCallback((messages = []) => {
+  const onSend = useCallback((messages = [], groupId) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
+    // console.log("messages: ", messages);
+    console.log("groupId: ", groupId);
     const { _id, createdAt, text, user } = messages[0];
     firestore()
       .collection("notes")
       .add({
+        groupId,
         _id,
         createdAt,
         text,
         user,
       })
       .then(() => {});
-  }, []);
+  }, [groupId]);
 
   const scrollToBottomComponent = () => {
     return <FontAwesome name="angle-double-down" size={22} color="#333" />;
@@ -104,6 +110,7 @@ export default function ChatScreen() {
 
   return (
     <>
+      <Text>{groupId}</Text>
       {loading ? (
         <View style={{ flex: 1, justifyContent: "center" }}>
           <ActivityIndicator size="large" />
@@ -111,7 +118,7 @@ export default function ChatScreen() {
       ) : (
         <GiftedChat
           messages={messages}
-          onSend={(messages) => onSend(messages)}
+          onSend={(messages) => onSend(messages, groupId)}
           renderBubble={renderBubble}
           renderSend={renderSend}
           alwaysShowSend={true}

@@ -42,10 +42,14 @@ export default function GroupScreen() {
     getAllGroups();
   }, []);
 
-  const openChat = (group) => {
+  const openChat = ({ _id, userId }) => {
     /** {"_id": "giecnxWMY1owF14ZDGmI", "createdAt": 2023-02-05T13:12:47.698Z, "name": "Goal", "userId": "8rqj76pHfsRVeiwSLDE7daISrGE2"} */
-    console.log("group:----- ", group);
-    navigation.navigate("Chat", { group });
+    navigation.navigate("Chat", {
+      item: {
+        _id,
+        userId,
+      },
+    });
   };
 
   return (

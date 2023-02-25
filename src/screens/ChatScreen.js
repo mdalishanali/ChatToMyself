@@ -56,8 +56,6 @@ export default function ChatScreen() {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
-    // console.log("messages: ", messages);
-    console.log("groupId: ", groupId);
     const { _id, createdAt, text, user } = messages[0];
     firestore()
       .collection("notes")

@@ -3,11 +3,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
+import DialogInput from "react-native-dialog-input";
 
 export default function GroupScreen() {
   const { logout, user } = useContext(AuthContext);
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [inputDialog, setInputDialog] = useState(true);
 
   const navigation = useNavigation();
 
@@ -43,13 +45,27 @@ export default function GroupScreen() {
   }, []);
 
   const openChat = ({ _id, userId }) => {
-    /** {"_id": "giecnxWMY1owF14ZDGmI", "createdAt": 2023-02-05T13:12:47.698Z, "name": "Goal", "userId": "8rqj76pHfsRVeiwSLDE7daISrGE2"} */
     navigation.navigate("Chat", {
       item: {
         _id,
         userId,
       },
     });
+  };
+
+  const createGroups = async (groupName) => {
+    setInputDialog(false);
+    await firestore()
+      .collection("groups")
+      .add({
+        name: groupName,
+        userId: user.uid,
+        createdAt: new Date(),
+      })
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -65,12 +81,21 @@ export default function GroupScreen() {
             );
           })
         : null}
-      <Text>Personal</Text>
-      <Text>Personal</Text>
-      <Text>Personal</Text>
-      <Text>Personal</Text>
-      <Text>Personal</Text>
+
       <Text>Create your group</Text>
+      <DialogInput
+        isDialogVisible={inputDialog}
+        title={"Create Group 🚀"}
+        message={"Type your message on group"}
+        hintInput={"Group"}
+        submitInput={(inputText) => {
+          createGroups(inputText);
+        }}
+        submitText={"Create"}
+        closeDialog={() => {
+          setInputDialog(false);
+        }}
+      ></DialogInput>
     </View>
   );
 }

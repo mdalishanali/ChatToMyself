@@ -10,7 +10,6 @@ import ChatScreen from "../screens/ChatScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import QuotesScreen from "../screens/QuotesScreen";
 
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -20,14 +19,15 @@ const MessageStack = ({ navigation }) => (
       headerShown: false,
     }}
   >
-    <Stack.Screen name="GroupScreen" component={GroupScreen} />
+    <Stack.Screen name="Groups" component={GroupScreen} />
     <Stack.Screen
       name="Chat"
       component={ChatScreen}
       options={({ route }) => ({
+        headerShown: false,
         // title: route.params.userName,
         headerBackTitleVisible: false,
-        tabBarVisible:false
+        tabBarVisible: false,
       })}
     />
   </Stack.Navigator>
@@ -39,7 +39,7 @@ const AppStack = () => {
       ? route.state.routes[route.state.index].name
       : "";
 
-      console.log('routeName: ', routeName);
+    console.log("routeName: ", routeName);
     if (routeName === "Chat") {
       return false;
     }
@@ -51,6 +51,7 @@ const AppStack = () => {
       initialRouteName="Group"
       screenOptions={{
         activeTintColor: "#2e64e5",
+        headerShown: false,
       }}
     >
       <Tab.Screen

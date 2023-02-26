@@ -18,6 +18,8 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { sizes, spacing } from "../constants/theme";
 import niceColors from "nice-color-palettes";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Loader from "../components/Loader";
+import Header from "../components/Header";
 
 const colors = [
   ...niceColors[1].slice(1, niceColors[1].length),
@@ -73,7 +75,7 @@ export default function GroupScreen() {
             image: iconData[Math.floor(Math.random() * iconData.length)],
           }));
           setGroups(newList);
-          // setLoading(false);
+          setLoading(false);
         });
     } catch (error) {
       console.log("error: ", error);
@@ -96,6 +98,7 @@ export default function GroupScreen() {
 
   const createGroups = async (groupName) => {
     setInputDialog(false);
+    setLoading(true);
     await firestore()
       .collection("groups")
       .add({
@@ -105,26 +108,18 @@ export default function GroupScreen() {
       })
       .then(() => {
         getAllGroups();
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={{
-          position: "relative",
-          flex: 1,
-          justifyContent: "center",
-          top: sizes.height / 2,
-          zIndex: 999,
-        }}
-      >
-        <ActivityIndicator size={"large"} />
-      </View>
-
+      <Loader loading={loading} />
+      {/* <Header /> */}
       <View>
         <FlatList
           data={groups}
@@ -212,7 +207,6 @@ const styles = StyleSheet.create({
 });
 
 const GroupItem = ({ item, openChat }) => {
-  console.log("item: ", item);
   let { name, userID, createdAt, image, color } = item;
   return (
     <TouchableOpacity
@@ -238,7 +232,6 @@ const GroupItem = ({ item, openChat }) => {
 };
 
 function capitalizeFirstLetter(string) {
-  return string;
-  // return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1);
   // return string.charAt(0).toUpperCase() + string.slice(1);
 }

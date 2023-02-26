@@ -1,36 +1,27 @@
 import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
 import { AuthContext } from "../context/AuthProvider";
-
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import firestore from "@react-native-firebase/firestore";
-import { useRoute } from "@react-navigation/native";
 
-export default function ChatScreen() {
+export default function SingleChatScreen() {
   const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const route = useRoute();
-  const { _id: groupId } = route.params.item;
-
   useEffect(() => {
     setLoading(true);
-    getAllNotes();
-    console.log(" ia m called", groupId);
-  }, [groupId]);
+    getAllChats();
+  }, []);
 
-  const getAllNotes = async () => {
+  const getAllChats = async () => {
     try {
       const list = [];
       await firestore()
-        .collection("notes")
+        .collection("chat")
         .where("user._id", "==", user.uid)
-        .where("groupId", "==", groupId)
         .orderBy("createdAt", "desc")
         .get()
         .then((querySnapshot) => {
@@ -42,9 +33,6 @@ export default function ChatScreen() {
           });
         });
       setMessages(list);
-      if (loading) {
-        setLoading(false);
-      }
       setLoading(false);
     } catch (e) {
       console.log("e: ", e);
@@ -52,25 +40,21 @@ export default function ChatScreen() {
     }
   };
 
-  const onSend = useCallback(
-    (messages = [], groupId) => {
-      setMessages((previousMessages) =>
-        GiftedChat.append(previousMessages, messages)
-      );
-      const { _id, createdAt, text, user } = messages[0];
-      firestore()
-        .collection("notes")
-        .add({
-          groupId,
-          _id,
-          createdAt,
-          text,
-          user,
-        })
-        .then(() => {});
-    },
-    [groupId]
-  );
+  const onSend = useCallback((messages = []) => {
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages)
+    );
+    const { _id, createdAt, text, user } = messages[0];
+    firestore()
+      .collection("chat")
+      .add({
+        _id,
+        createdAt,
+        text,
+        user,
+      })
+      .then(() => {});
+  }, []);
 
   const scrollToBottomComponent = () => {
     return <FontAwesome name="angle-double-down" size={22} color="#333" />;
@@ -118,7 +102,7 @@ export default function ChatScreen() {
       ) : (
         <GiftedChat
           messages={messages}
-          onSend={(messages) => onSend(messages, groupId)}
+          onSend={(messages) => onSend(messages)}
           renderBubble={renderBubble}
           renderSend={renderSend}
           alwaysShowSend={true}

@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { View, Text, StyleSheet, Image, Linking } from "react-native";
 import FormButton from "../components/FormButton";
 import { sizes } from "../constants/theme";
+import RewardAdsComp from "../components/RewardAdsComp";
 
 export default function ProfileScreen() {
   const { user, logout } = useContext(AuthContext);
@@ -21,6 +22,7 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
+      <RewardAdsComp />
       <View style={styles.imageContainer}>
         <Image
           style={styles.profileImage}

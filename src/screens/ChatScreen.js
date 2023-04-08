@@ -9,6 +9,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import firestore from "@react-native-firebase/firestore";
 import { useRoute } from "@react-navigation/native";
+import RewardAdsComp from "../components/RewardAdsComp";
 
 export default function ChatScreen() {
   const { user } = useContext(AuthContext);
@@ -111,6 +112,7 @@ export default function ChatScreen() {
 
   return (
     <>
+      <RewardAdsComp />
       {loading ? (
         <View style={{ flex: 1, justifyContent: "center" }}>
           <ActivityIndicator size="large" />

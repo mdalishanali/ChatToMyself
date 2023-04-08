@@ -5,6 +5,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { AuthContext } from "../context/AuthProvider";
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import firestore from "@react-native-firebase/firestore";
+import RewardAdsComp from "../components/RewardAdsComp";
 
 export default function SingleChatScreen() {
   const { user } = useContext(AuthContext);
@@ -95,6 +96,8 @@ export default function SingleChatScreen() {
 
   return (
     <>
+      <RewardAdsComp />
+
       {loading ? (
         <View style={{ flex: 1, justifyContent: "center" }}>
           <ActivityIndicator size="large" />

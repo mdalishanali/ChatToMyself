@@ -21,6 +21,7 @@ import niceColors from "nice-color-palettes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Loader from "../components/Loader";
 import Header from "../components/Header";
+import RewardAdsComp from "../components/RewardAdsComp";
 
 const colors = [
   ...niceColors[1].slice(1, niceColors[1].length),
@@ -125,6 +126,7 @@ export default function GroupScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Loader loading={loading} />
+      <RewardAdsComp />
       <View>
         {!groups.length ? <Text>Create a New Group</Text> : null}
         <FlatList

@@ -1,23 +1,11 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import {
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  StyleSheet,
-  Image,
-  FlatList,
-  Linking,
-} from "react-native";
+import { View, Text, StyleSheet, Image, Linking } from "react-native";
 import FormButton from "../components/FormButton";
 import { sizes } from "../constants/theme";
 
 export default function ProfileScreen() {
   const { user, logout } = useContext(AuthContext);
-  console.log("user: ", user);
 
   const privacyUrl =
     "https://www.privacypolicies.com/live/0094f2fb-67f0-4455-9fcb-46fcb130f570";
@@ -64,9 +52,9 @@ const styles = StyleSheet.create({
   },
   profileImage: {
     resizeMode: "contain",
-    width: 250,
-    height: 250,
-    borderRadius: 500,
+    width: 200,
+    height: 200,
+    borderRadius: 50,
   },
   textStyle: {
     fontWeight: 800,

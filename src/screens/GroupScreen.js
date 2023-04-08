@@ -126,6 +126,7 @@ export default function GroupScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <Loader loading={loading} />
       <View>
+        {!groups.length ? <Text>Create a New Group</Text> : null}
         <FlatList
           data={groups}
           renderItem={({ item }) => (

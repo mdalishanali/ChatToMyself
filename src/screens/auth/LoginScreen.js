@@ -21,10 +21,6 @@ const LoginScreen = ({ navigation }) => {
 
   const { login, googleLogin, fbLogin } = useContext(AuthContext);
 
-  useEffect(() => {
-    // googleLogin();
-  }, []);
-
   const privacyUrl =
     "https://www.privacypolicies.com/live/0094f2fb-67f0-4455-9fcb-46fcb130f570";
 
@@ -39,6 +35,10 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        source={require("../../assets/rn-social-logo.png")}
+        style={styles.logo}
+      />
       <Text style={styles.text}>Chat To Myself</Text>
 
       {Platform.OS === "android" ? (
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     paddingTop: 50,
+    backgroundColor: "#072c0b",
   },
   logo: {
     height: 150,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     fontSize: 35,
     marginBottom: 10,
-    color: "#051d5f",
+    color: "#ffff",
   },
   navButton: {
     marginTop: 15,

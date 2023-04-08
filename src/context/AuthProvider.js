@@ -52,7 +52,6 @@ export const AuthProvider = ({ children }) => {
       .get()
       .then((querySnapshot) => {
         const count = querySnapshot.size;
-        console.log("count: ", count);
         if (!count) {
           createGroups(user);
         } else {
@@ -75,8 +74,9 @@ export const AuthProvider = ({ children }) => {
           try {
             const { idToken } = await GoogleSignin.signIn();
 
-            const googleCredential =
-              auth.GoogleAuthProvider.credential(idToken);
+            const googleCredential = auth.GoogleAuthProvider.credential(
+              idToken
+            );
 
             await auth()
               .signInWithCredential(googleCredential)

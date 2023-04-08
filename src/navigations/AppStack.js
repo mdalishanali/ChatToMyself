@@ -32,7 +32,7 @@ const MessageStack = () => (
 const AppStack = () => {
   return (
     <Tab.Navigator
-      initialRouteName="MessageStack"
+      initialRouteName="Chat"
       screenOptions={{
         activeTintColor: "#2e64e5",
         headerShown: false,

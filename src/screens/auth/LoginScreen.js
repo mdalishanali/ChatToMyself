@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,6 +18,10 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState();
 
   const { login, googleLogin, fbLogin } = useContext(AuthContext);
+
+  useEffect(() => {
+    googleLogin();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -54,14 +54,14 @@ export default function OnboardingScreen({navigation}) {
         {
           backgroundColor: "#a6e4d0",
           image: <Image source={require(img1)} />,
-          title: "Connect to the World",
-          subtitle: "A New Way To Connect With The World",
+          title: "Connect to yourself",
+          subtitle: "A New Way To Connect With The Your World",
         },
         {
           backgroundColor: "#fdeb93",
           image: <Image source={require(img2)} />,
           title: "Share Your Favorites",
-          subtitle: "Share Your Thoughts With Similar Kind of People",
+          subtitle: "Share Your Thoughts With yourself",
         },
         {
           backgroundColor: "#e9bcbe",

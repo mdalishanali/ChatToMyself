@@ -47,7 +47,7 @@ const AppStack = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Group"
+      initialRouteName="Profile"
       screenOptions={{
         activeTintColor: "#2e64e5",
         headerShown: false,

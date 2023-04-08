@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   FlatList,
+  ToastAndroid,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
@@ -47,6 +48,10 @@ export default function GroupScreen() {
 
   const navigation = useNavigation();
 
+  const showToast = () => {
+    ToastAndroid.show("Successfully Created", ToastAndroid.SHORT);
+  };
+
   const getAllGroups = async () => {
     setLoading(true);
     try {
@@ -54,7 +59,7 @@ export default function GroupScreen() {
       await firestore()
         .collection("groups")
         .where("userId", "==", user.uid)
-        .orderBy("createdAt", "asc")
+        .orderBy("createdAt", "desc")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -108,6 +113,7 @@ export default function GroupScreen() {
       })
       .then(() => {
         getAllGroups();
+        showToast();
         setLoading(false);
       })
       .catch((error) => {
@@ -119,7 +125,6 @@ export default function GroupScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Loader loading={loading} />
-      {/* <Header /> */}
       <View>
         <FlatList
           data={groups}
@@ -140,7 +145,8 @@ export default function GroupScreen() {
       >
         <Image
           source={{
-            uri: "https://reactnativecode.com/wp-content/uploads/2017/11/Floating_Button.png",
+            uri:
+              "https://reactnativecode.com/wp-content/uploads/2017/11/Floating_Button.png",
           }}
           style={styles.FloatingButtonStyle}
         />

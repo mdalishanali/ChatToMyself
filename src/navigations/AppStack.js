@@ -1,9 +1,6 @@
 import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GroupScreen from "../screens/GroupScreen";
@@ -14,7 +11,7 @@ import SingleChatScreen from "../screens/SingleChatScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const MessageStack = ({ navigation }) => (
+const MessageStack = () => (
   <Stack.Navigator
     screenOptions={{
       headerShown: false,
@@ -27,27 +24,15 @@ const MessageStack = ({ navigation }) => (
       options={({ route }) => ({
         headerShown: false,
         headerBackTitleVisible: false,
-        tabBarVisible: false,
       })}
     />
   </Stack.Navigator>
 );
 
 const AppStack = () => {
-  const getTabBarVisibility = (route) => {
-    const routeName = route.state
-      ? route.state.routes[route.state.index].name
-      : "";
-
-    if (routeName === "Chat") {
-      return false;
-    }
-    return true;
-  };
-
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName="MessageStack"
       screenOptions={{
         activeTintColor: "#2e64e5",
         headerShown: false,
@@ -56,9 +41,8 @@ const AppStack = () => {
       <Tab.Screen
         name="MessageStack"
         component={MessageStack}
-        options={({ route }) => ({
+        options={() => ({
           tabBarLabel: "Group",
-          tabBarVisible: getTabBarVisibility(route),
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="group" color={color} size={size || "150"} />
           ),
@@ -68,7 +52,6 @@ const AppStack = () => {
         name="Chat"
         component={SingleChatScreen}
         options={({ route }) => ({
-          tabBarVisible: getTabBarVisibility(route),
           tabBarIcon: ({ color, size }) => (
             <Ionicons
               name="chatbox-ellipses-outline"

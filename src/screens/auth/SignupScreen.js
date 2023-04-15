@@ -17,7 +17,19 @@ const SignupScreen = ({ navigation }) => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
 
-  const { register } = useContext(AuthContext);
+  const { register, googleLogin } = useContext(AuthContext);
+
+  const privacyUrl =
+    "https://www.privacypolicies.com/live/0094f2fb-67f0-4455-9fcb-46fcb130f570";
+
+  const OpenURLButton = async () => {
+    const supported = await Linking.canOpenURL(privacyUrl);
+    if (supported) {
+      await Linking.openURL(privacyUrl);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${privacyUrl}`);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -58,7 +70,7 @@ const SignupScreen = ({ navigation }) => {
         <Text style={styles.color_textPrivate}>
           By registering, you confirm that you accept our{" "}
         </Text>
-        <TouchableOpacity onPress={() => alert("Terms Clicked!")}>
+        <TouchableOpacity onPress={OpenURLButton}>
           <Text style={[styles.color_textPrivate, { color: "#e88832" }]}>
             Terms of service
           </Text>
@@ -72,19 +84,13 @@ const SignupScreen = ({ navigation }) => {
       {Platform.OS === "android" ? (
         <View>
           <SocialButton
-            buttonTitle="Sign Up with Facebook"
-            btnType="facebook"
-            color="#4867aa"
-            backgroundColor="#e6eaf4"
-            onPress={() => {}}
-          />
-
-          <SocialButton
             buttonTitle="Sign Up with Google"
             btnType="google"
             color="#de4d41"
             backgroundColor="#f5e7ea"
-            onPress={() => {}}
+            onPress={() => {
+              googleLogin();
+            }}
           />
         </View>
       ) : null}
@@ -103,17 +109,20 @@ export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f9fafd",
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    paddingTop: 50,
+    display: "flex",
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#072c0b",
   },
   text: {
     fontFamily: "Kufam-SemiBoldItalic",
     fontSize: 28,
     marginBottom: 10,
-    color: "#051d5f",
+    color: "white",
   },
   navButton: {
     marginTop: 15,

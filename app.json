@@ -2,6 +2,7 @@
   "name": "ChatToMyself",
   "displayName": "ChatToMyself",
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-9053239820097034~1739851253"
+    "android_app_id": "ca-app-pub-9053239820097034~1739851253",
+        "ios_app_id": "xxxxx"
   }
 }

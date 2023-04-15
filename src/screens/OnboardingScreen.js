@@ -48,8 +48,8 @@ export default function OnboardingScreen({navigation}) {
       NextButtonComponent={Next}
       DoneButtonComponent={Done}
       DotComponent={Dots}
-      onSkip={() => navigation.replace("Login")}
-      onDone={() => navigation.navigate("Login")}
+      onSkip={() => navigation.replace("GoogleLoginScreen")}
+      onDone={() => navigation.navigate("GoogleLoginScreen")}
       pages={[
         {
           backgroundColor: "#a6e4d0",

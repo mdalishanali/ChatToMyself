@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import OnboardingScreen from "./src/screens/OnboardingScreen";
-import LoginScreen from "./src/screens/auth/LoginScreen";
+import LoginScreen from "./src/screens/auth/GoogleLoginScreen";
 import Providers from "./src/navigations/index";
 import SplashScreen from "react-native-splash-screen";
 

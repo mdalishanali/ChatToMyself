@@ -21,7 +21,7 @@ export default function RewardAdsComp() {
     const unsubscribeLoaded = rewarded.addAdEventListener(
       RewardedAdEventType.LOADED,
       () => {
-        rewarded.show();
+        // rewarded.show();
       }
     );
     const unsubscribeEarned = rewarded.addAdEventListener(
@@ -31,6 +31,8 @@ export default function RewardAdsComp() {
     rewarded.load();
     // Unsubscribe from events on unmount
     return () => {
+      rewarded.show();
+
       unsubscribeLoaded();
       unsubscribeEarned();
     };

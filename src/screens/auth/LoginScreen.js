@@ -1,45 +1,60 @@
-import React, { useContext, useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Platform,
   StyleSheet,
+  Text,
+  View,
   ScrollView,
-  Linking,
-  Alert,
+  Image,
+  TouchableOpacity,
+  Platform,
 } from "react-native";
+import React, { useState, useContext } from "react";
+
 import FormInput from "../../components/FormInput";
 import FormButton from "../../components/FormButton";
 import SocialButton from "../../components/SocialButton";
 import { AuthContext } from "../../context/AuthProvider";
+// import { AuthContext } from "../../navigation/AuthProvider";
+// AuthContext
+export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const { login, googleLogin } = useContext(AuthContext);
 
-  const { login, googleLogin, fbLogin } = useContext(AuthContext);
-
-  const privacyUrl =
-    "https://www.privacypolicies.com/live/0094f2fb-67f0-4455-9fcb-46fcb130f570";
-
-  const OpenURLButton = async () => {
-    const supported = await Linking.canOpenURL(privacyUrl);
-    if (supported) {
-      await Linking.openURL(privacyUrl);
-    } else {
-      Alert.alert(`Don't know how to open this URL: ${privacyUrl}`);
-    }
-  };
-
+  const fbLogin = () => {};
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image
         source={require("../../assets/rn-social-logo.png")}
         style={styles.logo}
       />
-      <Text style={styles.text}>Chat To Myself</Text>
+
+      <FormInput
+        labelValue={email}
+        onChangeText={(userEmail) => setEmail(userEmail)}
+        placeholderText="Email"
+        iconType="user"
+        keyboardType="email-address"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+
+      <FormInput
+        labelValue={password}
+        onChangeText={(userPassword) => setPassword(userPassword)}
+        placeholderText="Password"
+        iconType="lock"
+        secureTextEntry={true}
+      />
+
+      <FormButton
+        buttonTitle="Sign In"
+        onPress={() => login(email, password)}
+      />
+
+      <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+        {/* <Text style={styles.navButtonText}>Forgot Password?</Text> */}
+      </TouchableOpacity>
 
       {Platform.OS === "android" ? (
         <View>
@@ -52,47 +67,40 @@ const LoginScreen = ({ navigation }) => {
           />
         </View>
       ) : null}
-      <View style={styles.textPrivate}>
-        <Text style={styles.color_textPrivate}>
-          By registering, you confirm that you accept our{" "}
+
+      <TouchableOpacity
+        style={styles.forgotButton}
+        onPress={() => navigation.navigate("Signup")}
+      >
+        <Text style={styles.navButtonText}>
+          Don't have an acount? Create here
         </Text>
-        <TouchableOpacity onPress={OpenURLButton}>
-          <Text style={[styles.color_textPrivate, { color: "#e88832" }]}>
-            Terms of service
-          </Text>
-        </TouchableOpacity>
-        <Text style={styles.color_textPrivate}> and </Text>
-        <Text style={[styles.color_textPrivate, { color: "#e88832" }]}>
-          Privacy Policy
-        </Text>
-      </View>
+      </TouchableOpacity>
     </ScrollView>
   );
-};
-
-export default LoginScreen;
+}
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    display: "flex",
-    flex: 1,
     alignItems: "center",
     padding: 20,
     paddingTop: 50,
+    display: "flex",
+    flex: 1,
+    alignItems: "center",
     backgroundColor: "#072c0b",
   },
   logo: {
-    height: 150,
-    width: 150,
+    height: 250,
+    width: 250,
     resizeMode: "cover",
   },
   text: {
     fontFamily: "Kufam-SemiBoldItalic",
-    marginBottom: 50,
-    fontSize: 35,
+    fontSize: 28,
     marginBottom: 10,
-    color: "#ffff",
+    color: "white",
   },
   navButton: {
     marginTop: 15,
@@ -103,19 +111,8 @@ const styles = StyleSheet.create({
   navButtonText: {
     fontSize: 18,
     fontWeight: "500",
-    color: "#2e64e5",
+    color: "white",
     fontFamily: "Lato-Regular",
-  },
-  textPrivate: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginVertical: 35,
-    justifyContent: "center",
-  },
-  color_textPrivate: {
-    fontSize: 13,
-    fontWeight: "400",
-    fontFamily: "Lato-Regular",
-    color: "grey",
+    bottom:10,
   },
 });
